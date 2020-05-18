@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import entities.Employe;
+import entities.Employee;
 
 public class Program {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner (System.in);
 		
-		List<Employe> list = new ArrayList<>();
+		List<Employee> list = new ArrayList<>();
 		
 		System.out.print("Enter full file path: ");
 		String path = sc.nextLine();
@@ -31,7 +31,7 @@ public class Program {
 				String name = lines[0];
 				String email = lines[1];
 				double salary = Double.parseDouble(lines[2]);
-				list.add(new Employe(name, email, salary));
+				list.add(new Employee(name, email, salary));
 				
 				line = br.readLine();
 			}
@@ -45,8 +45,12 @@ public class Program {
 		
 		Comparator<String> comp = (s1,s2) -> s1.toUpperCase().compareTo(s2.toUpperCase());
 		
-		List<String> email = list.stream().filter(p -> p.getSalary() >salarye).map(p -> p.getEmail()).sorted().sorted(comp).collect(Collectors.toList());
+		// filter -> filtra a lista com base em uma condição
+		// função -> recebe objeto e rotorna outro objeto diferente.
+		// map ->  recebe uma função e aplica a toda a Stream
 		
+		List<String> email = list.stream().filter(p -> p.getSalary() >salarye).map(p -> p.getEmail()).sorted(comp).collect(Collectors.toList());
+		//filtrado a lista com base no salario pegado da lista somente as String emails feito a ordenação da stream e deposis convertido para lista.
 		double sum = list.stream().filter(p -> p.getName().charAt(0) == 'M').map(p -> p.getSalary()).reduce(0.0, (x,y) -> x+y);
 		
 		System.out.println("Email of people whose salary is more than 2000.00: ");
